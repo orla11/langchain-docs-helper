@@ -23,7 +23,7 @@ def run_llm(query: str) -> Any:
         llm=chat,
         chain_type="stuff",
         retriever=docsearch.as_retriever(),
-        return_source_document=True,
+        return_source_documents=True
     )
     return qa({"query": query})
 
