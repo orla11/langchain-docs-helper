@@ -3,7 +3,7 @@
 
 # Overview
 
-**LangChain Documentation Helper** is a Python project that uses LangChain to gather information out of LangChain official documentation. It uses Pinecone as a vector store for all the langchain documentation embeddings, the ConversationalRetrievalChain to interact with the embeddings via user prompt, a chat history and streamlit as the frontend.
+**LangChain Documentation Helper** is a Python project that uses LangChain to gather information out of *LangChain* official documentation. It uses *Pinecone* as a vectorstore for the embeddings, the *ConversationalRetrievalChain* to interact with the embeddings via user prompt (with *chat_history*) and *streamlit* as the frontend.
 
 # Getting Started
 
