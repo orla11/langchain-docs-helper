@@ -2,11 +2,11 @@ import os
 import config
 import pinecone
 
-from typing import Any
+from typing import Any, Tuple, List
 
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
-from langchain.chains import RetrievalQA
+from langchain.chains import ConversationalRetrievalChain
 from langchain.vectorstores import Pinecone
 
 pinecone.init(
@@ -15,17 +15,19 @@ pinecone.init(
 )
 
 
-def run_llm(query: str) -> Any:
+def run_llm(query: str, chat_history: List[Tuple[str, Any]] = []) -> Any:
     embeddings = OpenAIEmbeddings()
     docsearch = Pinecone.from_existing_index(config.INDEX_NAME, embedding=embeddings)
     chat = ChatOpenAI(verbose=True, temperature=0)
-    qa = RetrievalQA.from_chain_type(
+
+    qa = ConversationalRetrievalChain.from_llm(
         llm=chat,
         chain_type="stuff",
         retriever=docsearch.as_retriever(),
-        return_source_documents=True
+        return_source_documents=True,
     )
-    return qa({"query": query})
+
+    return qa({"question": query, "chat_history": chat_history})
 
 
 if __name__ == "__main__":
